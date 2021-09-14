@@ -1,2 +1,0 @@
-Superuser - kishlaykumar
-pass = kishlay1234

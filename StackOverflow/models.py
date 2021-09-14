@@ -2,26 +2,40 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from djrichtextfield.models import RichTextField
+from multiselectfield import MultiSelectField
 
 
 
+
+My_Tags = (('python','python'),
+           ('django','django'),
+           ('cpp','cpp'),
+           ('C','C'),
+           ('HTML','HTML'),
+           ('CSS','CSS'),
+           ('javascript','javascript'),
+           ('other','other'))
 
 
 
 class Question(models.Model):
+    title = models.CharField(max_length=50)
     text = RichTextField()
     author = models.ForeignKey(User, on_delete = models.CASCADE)
-    views = models.ManyToManyField(User, related_name = 'views')
-    upvotes_ques = models.ManyToManyField(User,related_name = 'upvotes_ques')
+    views = models.ManyToManyField(User, related_name = 'views', null=True, blank=True)
+    upvotes_ques = models.ManyToManyField(User,related_name = 'upvotes_ques', null=True, blank=True)
     created_at = models.DateField(auto_now_add = True)
-    n_comments = models.IntegerField()
-    n_answers = models.IntegerField()
-    #tags still working 
+    n_comments = models.IntegerField( default=0)
+    n_answers = models.IntegerField(default=0)
+    tags = MultiSelectField(choices=My_Tags, default='other')
+
+    def __str__(self):
+        return self.title
 
 
 class Answer(models.Model):
     text = RichTextField()
-    upvotes_ans = models.ManyToManyField(User, related_name = 'upvotes_ans')
+    upvotes_ans = models.ManyToManyField(User, related_name = 'upvotes_ans', null=True, blank=True)
     question = models.ForeignKey(Question, on_delete = models.CASCADE, related_name = 'question_ans')
     author_ans = models.ForeignKey(User, on_delete = models.CASCADE, related_name = 'user_ans')
 
