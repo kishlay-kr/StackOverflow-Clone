@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models.fields import NullBooleanField
 from django.urls import reverse
 from djrichtextfield.models import RichTextField
 from multiselectfield import MultiSelectField
@@ -19,18 +20,14 @@ My_Tags = (('python','python'),
 
 
 class Question(models.Model):
-    title = models.CharField(max_length=50)
     text = RichTextField()
     author = models.ForeignKey(User, on_delete = models.CASCADE)
     views = models.ManyToManyField(User, related_name = 'views', null=True, blank=True)
     upvotes_ques = models.ManyToManyField(User,related_name = 'upvotes_ques', null=True, blank=True)
     created_at = models.DateField(auto_now_add = True)
-    n_comments = models.IntegerField( default=0)
-    n_answers = models.IntegerField(default=0)
+    # n_comments = models.IntegerField( default=0)
+    # n_answers = models.IntegerField(default=0)
     tags = MultiSelectField(choices=My_Tags, default='other')
-
-    def __str__(self):
-        return self.title
 
 
 class Answer(models.Model):

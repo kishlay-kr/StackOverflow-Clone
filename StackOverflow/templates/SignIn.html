@@ -1,12 +1,49 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %} SignIn {% endblock%}
+{% block head %}
+<style>
+    body{
+        background-color:rgba(192, 192, 192, 0.575)
+    }
+    .input{
+        margin: 2%;
+        
+    }
+    .login-form{
+        width:30%;
+        height:50%;
+        background-color:rgb(105, 174, 177);
+        margin-inline:35%;
+        margin-top:6%;
+        border-radius:1rem;
+        padding:2%;
+       box-shadow: 0px 5px 20px 2px #888888;
+}
+        
+    
+</style>
+{% endblock %}
 {% block content %}
+<div class = "login-form">
+    <center><h4>Sign In</h4></center>
+    <form action='' class="form", method="POST", enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <p>Username: <span><input class="input" type='text' name='username' placeholder='username'><br></span></p>
+        <p>Password: <span><input class="input" type = 'password' name = 'password' placeholder='password'><br></span></p>
+        <br>
+        
+        <center><input style="background-color:green; border-radius:.3rem"type="submit" value=" Sign In "name='SignIn' ></center>
+    </form>
+    <br><br>
+    <center>
+        <h4>New Uer?</h4>
+        <br>
+    <a href="/SignUp" style="color:rgb(5, 43, 65)">Sign Up</a>
+    </center>
+    <br>
+    <br>
+</div>
 
-<form action='' , method="POST", enctype="multipart/form-data">
-    {% csrf_token %}
-    <input type='text' name='username' placeholder='username'><br>
-    <input type = 'password' name = 'password' placeholder='password'><br>
-    <input type="submit" name='SignIn' >
-</form>
 {% endblock %}

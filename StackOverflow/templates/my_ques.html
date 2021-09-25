@@ -6,8 +6,9 @@
 
 {% block content %}
 <div style="width:80%; margin-inline-start: 10%;  background-color: lightslategray;">
-  <center><b style="font-size:150%;">All Questions</b></center>
+  <center><b style="font-size:150%;">My Questions</b></center>
   {% for question in questions %}
+  
   <div class="container " style="width: 80%; margin-inline-start:10%;margin-top:2%; padding:2%; background-color: wheat; border-radius:0.5rem ">
       <div class="row"> 
         <div class="col">
@@ -16,19 +17,6 @@
             </b>
           
           <p style="font-family:cursive; color:lightslategray">Tags:  {{question.tags|safeseq|join:"  |  "|title}}</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col">
-        
-          
-        </div>
-        <div class="col">
-        
-        </div>
-        <div class="col" style="position: relative;">
-            <span style="position:absolute;right:10px;"><i>{{question.created_at}}</i></span>
-          
         </div>
       </div>
       <div calss="row">

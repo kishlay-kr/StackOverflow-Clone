@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}   
+{% block title %}
+ Homepage
+{% endblock %}
+
+{% block content %}
+<div style="width:80%; margin-inline-start: 10%;  background-color: lightslategray;">
+    <div class="container " style="width: 80%; margin-inline-start:10%;margin-top:2%; padding:2%; background-color: rgba(248, 245, 240, 0.822); border-radius:0.5rem ">
+        <div class="row"> 
+          <div class="col">
+              <center>
+                  <b>
+                {{ques.text|safe}}
+              </b>
+              </center>
+          </div>
+
+        </div>
+        <div calss="row">
+            <a href="#" style="color:rgb(90, 90, 90)">{{ques.question_cmnt.all.count}} comments</a> <br>
+            <a href="#ans" style="color:rgb(90, 90, 90);">{{ques.question_ans.all.count}} answers</a>
+            <p  style="color:rgb(90, 90, 90) ; text-decoration:underline">{{ques.upvotes_ques.count}} upvotes</p>
+            <p  style="color:rgb(90, 90, 90) ; text-decoration:underline">{{ques.views.count}} views</p> <br>
+        </div>
+        <div class = "row">
+            <form action='' method = "POST" enctype = "multipart/form-data">
+                {% csrf_token %}
+                {{form_ques}}
+                <center><input type="submit" name='action_ques' value="Post" style="background-color: green; color: honeydew;"></center>
+            </form>
+            
+        </div>
+        <div class="row">
+            <a href="/{{ques.id}}/upvote_ques" style="color:rgb(90, 90, 90)">Upvote</a>
+        </div>
+        <div class="row">
+          <div class="col">
+          
+          </div>
+          <div class="col">
+          
+          </div>
+          <div class="col" style="position: relative;">
+              <span style="position:absolute;right:10px;"><i>by - {{ques.author}}</i></span>
+            
+          </div>
+        </div>
+    </div>
+    <br>
+  <b id="ans" style="margin-inline :10%;">Answers</b>
+  {% for ans in ques.question_ans.all %}
+  <div class="container " style="width: 80%; margin-inline-start:10%;margin-top:2%; padding:2%; background-color: wheat; border-radius:0.5rem ">
+      <div class="row"> 
+        <div class="col">
+            <b>
+              {{forloop.counter}}.{{ans.text|safe}}
+            </b>
+          
+        </div>
+      </div>
+      <div calss="row">
+        <a href="#" style="color:rgb(90, 90, 90)">{{ans.answer.all.count}} comments</a> <br>  
+        <p  style="color:rgb(90, 90, 90) ; text-decoration:underline">{{ans.upvotes_ans.count}} upvotes</p> <br>
+        <a href="/{{ans.id}}/{{ques.id}}/upvote_ans" style="color:rgb(90, 90, 90)">Upvote</a> <br>
+      </div>
+      <div class = "row">
+        <form action='' method = "POST" enctype = "multipart/form-data">
+            {% csrf_token %}
+            {{form_ans}}
+            <center><input type="submit" name='{{action_ans}}' value="Post" style="background-color: green; color: honeydew;"></center>
+        </form>
+        
+    </div>
+      <div class="row">
+        <div class="col">
+        
+        </div>
+        <div class="col">
+        
+        </div>
+        <div class="col" style="position: relative;">
+            <span style="position:absolute;right:10px;"><i>by - {{ans.author_ans}}</i></span>
+          
+        </div>
+      </div>
+  </div>
+  <p>&nbsp;</p>
+  {% endfor %}
+  <b id="add_ans" style="margin-inline :10%;">Add Answer</b>
+  <div class="container " style="width: 80%; margin-inline-start:10%;margin-top:2%; padding:2%; background-color: wheat; border-radius:0.5rem ">
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form}}
+        <center><input type="submit" name='action' value="Answer" style="background-color: green; color: honeydew;"></center>
+    </form>
+</div>
+</div>
+
+
+{% endblock %}

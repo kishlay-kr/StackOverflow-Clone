@@ -27,6 +27,11 @@ urlpatterns = [
     path('SignUp/',views.SignUp, name = 'SignUp'),
     path('SignIn', views.SignIn, name='SignIn'),
     path('SignOut', views.SignOut, name='SingOut'),
+    path('<int:id>/question_detail', views.question_detail, name = 'question_detail'),
+    path('ask_question', views.ask_question , name = "ask_ques"),
+    path('my_ques', views.my_ques, name = 'my_ques'),
+    path('<int:id>/<int:q>/upvote_ans', views.upvote_ans, name = 'upvote_ans'),
+    path('<int:id>/upvote_ques' , views.upvote_ques, name = 'upvote_ques'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL , document_root = settings.MEDIA_ROOT)
