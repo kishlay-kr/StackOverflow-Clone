@@ -1,101 +1,139 @@
 {% extends 'base.html' %}
-{% load static %}   
+{% load static %}
 {% block title %}
- Homepage
+Homepage
 {% endblock %}
 
 {% block content %}
-<div style="width:80%; margin-inline-start: 10%;  background-color: lightslategray;">
-    <div class="container " style="width: 80%; margin-inline-start:10%;margin-top:2%; padding:2%; background-color: rgba(248, 245, 240, 0.822); border-radius:0.5rem ">
-        <div class="row"> 
-          <div class="col">
-              <center>
-                  <b>
-                {{ques.text|safe}}
-              </b>
-              </center>
-          </div>
+
+<div style="background-color: rgba(95, 158, 160, 0.089);" class="container d-flex flex-column align-items-center">
+  <div style="background-color: rgba(222, 184, 135, 0.185);" class="card bg-opacity-10 shadow-lg p-2 m-2 w-100">
+    <div class="  card-body">
+      <h5 class="card-title">{{ques.text|safe}}</h5>
+      <div class="d-flex justify-content-between">
+        <div>
+          <p class="text-muted">Tags: {{ques.tags|safeseq|join:" | "|title}}</p>
+          {% if user in ques.upvotes_ques.all %}
+          <a href="/{{ques.id}}/unupvote_ques" class="btn btn-primary">{{ques.upvotes_ques.all.count}} upvotes</a>
+          {% else %}
+          <a href="/{{ques.id}}/upvote_ques" class="btn btn-secondary">{{ques.upvotes_ques.all.count}} upvotes</a>
+          {% endif %}
+          <p class="text-muted">{{ques.views.all.count}} views</p>
+          <a style=" color:grey" href="#ans" class="text-muted">{{ques.question_ans.all.count}} answers</a>
+
 
         </div>
-        <div calss="row">
-            <a href="#" style="color:rgb(90, 90, 90)">{{ques.question_cmnt.all.count}} comments</a> <br>
-            <a href="#ans" style="color:rgb(90, 90, 90);">{{ques.question_ans.all.count}} answers</a>
-            <p  style="color:rgb(90, 90, 90) ; text-decoration:underline">{{ques.upvotes_ques.count}} upvotes</p>
-            <p  style="color:rgb(90, 90, 90) ; text-decoration:underline">{{ques.views.count}} views</p> <br>
-        </div>
-        <div class = "row">
-            <form action='' method = "POST" enctype = "multipart/form-data">
-                {% csrf_token %}
-                {{form_ques}}
-                <center><input type="submit" name='action_ques' value="Post" style="background-color: green; color: honeydew;"></center>
-            </form>
-            
-        </div>
-        <div class="row">
-            <a href="/{{ques.id}}/upvote_ques" style="color:rgb(90, 90, 90)">Upvote</a>
-        </div>
-        <div class="row">
-          <div class="col">
-          
-          </div>
-          <div class="col">
-          
-          </div>
-          <div class="col" style="position: relative;">
-              <span style="position:absolute;right:10px;"><i>by - {{ques.author}}</i></span>
-            
-          </div>
-        </div>
-    </div>
-    <br>
-  <b id="ans" style="margin-inline :10%;">Answers</b>
-  {% for ans in ques.question_ans.all %}
-  <div class="container " style="width: 80%; margin-inline-start:10%;margin-top:2%; padding:2%; background-color: wheat; border-radius:0.5rem ">
-      <div class="row"> 
-        <div class="col">
-            <b>
-              {{forloop.counter}}.{{ans.text|safe}}
-            </b>
-          
+        <div class="d-flex justify-content-end flex-column">
+          <p class="text-muted fst-italic float-end">{{ques.created_at}}</p>
+          <p class="text-muted float-top">by - {{ques.author}}</p>
         </div>
       </div>
-      <div calss="row">
-        <a href="#" style="color:rgb(90, 90, 90)">{{ans.answer.all.count}} comments</a> <br>  
-        <p  style="color:rgb(90, 90, 90) ; text-decoration:underline">{{ans.upvotes_ans.count}} upvotes</p> <br>
-        <a href="/{{ans.id}}/{{ques.id}}/upvote_ans" style="color:rgb(90, 90, 90)">Upvote</a> <br>
-      </div>
-      <div class = "row">
-        <form action='' method = "POST" enctype = "multipart/form-data">
-            {% csrf_token %}
-            {{form_ans}}
-            <center><input type="submit" name='{{action_ans}}' value="Post" style="background-color: green; color: honeydew;"></center>
+      <p>
+        <a style="color:grey" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+          aria-controls="collapseExample">
+          {{ques.question_cmnt.all.count}} comments
+        </a>
+      </p>
+      <div class="collapse card" id="collapseExample">
+        {% for cmnt in ques.question_cmnt.all %}
+
+        <div class="border-bottom px-2">
+          <b>{{cmnt.author_cmnt}} </b>&nbsp;&nbsp;<span
+            class="text-muted fs-6 fw-lighter">{{cmnt.time}}</span><br>&nbsp;
+          {{cmnt.text|safe}}
+        </div>
+
+        {% endfor %}
+
+        <br>
+
+
+        <form action="" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="form-group">
+            <label for="exampleFormControlTextarea1" class="px-1 fw-bold">Add comment</label>
+            <textarea name="text" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
+
+          <button type="submit" name="action_ques" class="btn btn-primary  m-1">Comment</button>
         </form>
-        
-    </div>
-      <div class="row">
-        <div class="col">
-        
-        </div>
-        <div class="col">
-        
-        </div>
-        <div class="col" style="position: relative;">
-            <span style="position:absolute;right:10px;"><i>by - {{ans.author_ans}}</i></span>
-          
-        </div>
+
+
       </div>
+    </div>
   </div>
-  <p>&nbsp;</p>
+  <!---->
+  <p class="fw-bold fs-5">Answers</p>
+  {% for ans in ques.question_ans.all%}
+
+  <div class="card bg-opacity-10 shadow-lg p-2 m-2 w-75">
+    <div class="card-body ">
+      <p>
+      <h5 class="card-title"><span>{{forloop.counter}}</span>.<span class="fs-5">{{ans.text|safe}}</span>
+      </h5>
+      </p>
+      <div class="">
+        {% if user in ans.upvotes_ans.all %}
+        <a href="/{{ans.id}}/{{ques.id}}/unupvote_ans" class="btn btn-primary mb-1">{{ans.upvotes_ans.all.count}}
+          upvotes</a>
+        {% else %}
+        <a href="/{{ans.id}}/{{ques.id}}/upvote_ans" class="btn btn-secondary mb-1">{{ans.upvotes_ans.all.count}}
+          upvotes</a>
+        {% endif %}
+        <div class="text-muted">
+          <p class="text-muted float-end">by - {{ans.author_ans}}</p>
+        </div>
+        <!---->
+        <p>
+          <a style="color:grey" data-toggle="collapse" href="#collapseExample{{ans.id}}" role="button"
+            aria-expanded="false" aria-controls="collapseExample{{ans.id}}">
+            {{ans.answer.all.count}} comments
+          </a>
+        </p>
+        <div class="collapse card" id="collapseExample{{ans.id}}">
+          {% for cmnt in ans.answer.all %}
+
+          <div class="border-bottom px-2">
+            <b>{{cmnt.author_cmnt}} </b>&nbsp;&nbsp;<span
+              class="text-muted fs-6 fw-lighter">{{cmnt.time}}</span><br>&nbsp;
+            {{cmnt.text|safe}}
+          </div>
+
+          {% endfor %}
+
+          <br>
+
+
+          <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="exampleFormControlTextarea{{ans.id}}" class="px-1 fw-bold">Add comment</label>
+              <textarea name="text" class="form-control" id="exampleFormControlTextarea{{ans.id}}" rows="3"></textarea>
+            </div>
+            <input type="hidden" name='id_ans' value="{{ans.id}}">
+            <button type="submit" name="action_ans" class="btn btn-primary  m-1">Comment</button>
+          </form>
+
+
+        </div>
+        <!---->
+
+      </div>
+    </div>
+  </div>
   {% endfor %}
-  <b id="add_ans" style="margin-inline :10%;">Add Answer</b>
-  <div class="container " style="width: 80%; margin-inline-start:10%;margin-top:2%; padding:2%; background-color: wheat; border-radius:0.5rem ">
+  <div class="card w-75 p-4" style="background-color: rgba(211, 146, 6, 0.527);">
     <form action="" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{form}}
-        <center><input type="submit" name='action' value="Answer" style="background-color: green; color: honeydew;"></center>
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1" class="p-1 fw-bold">Add Answer </label>
+        <textarea name="text" class="form-control form-control-lg" id="exampleFormControlTextarea1" cols="10"
+          rows="3"></textarea>
+      </div>
+      <button class="btn btn-primary m-1" type="submit" name="action"> Answer</button>
     </form>
-</div>
-</div>
+  </div>
 
 
+</div>
 {% endblock %}

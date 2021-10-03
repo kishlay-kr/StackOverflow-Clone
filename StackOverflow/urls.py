@@ -32,6 +32,12 @@ urlpatterns = [
     path('my_ques', views.my_ques, name = 'my_ques'),
     path('<int:id>/<int:q>/upvote_ans', views.upvote_ans, name = 'upvote_ans'),
     path('<int:id>/upvote_ques' , views.upvote_ques, name = 'upvote_ques'),
+    path('<int:id>/unupvote_ques' , views.unupvote_ques, name = 'unupvote_ques'),
+    path('<int:id>/<int:q>/unupvote_ans', views.unupvote_ans, name = 'unupvote_ans'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL , document_root = settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL , document_root = settings.STATIC_ROOT)
+
+
+    

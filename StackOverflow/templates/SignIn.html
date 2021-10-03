@@ -25,6 +25,9 @@
 </style>
 {% endblock %}
 {% block content %}
+{% for message in messages %}
+<p class="text-center p-3 fw-bold fs-5" style = "color: rgba(220, 20, 20, 0.925);">{{message}}</p>
+{% endfor %}
 <div class = "login-form">
     <center><h4>Sign In</h4></center>
     <form action='' class="form", method="POST", enctype="multipart/form-data">
@@ -42,8 +45,8 @@
         <br>
     <a href="/SignUp" style="color:rgb(5, 43, 65)">Sign Up</a>
     </center>
-    <br>
-    <br>
+    
+
 </div>
 
 {% endblock %}
