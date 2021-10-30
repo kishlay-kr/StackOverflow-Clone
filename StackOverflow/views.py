@@ -3,7 +3,7 @@ from django.shortcuts import render,redirect, HttpResponseRedirect, get_object_o
 from .models import Question, Answer
 from django.contrib import messages
 from django.contrib.auth.models import auth, User
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm , AuthenticationForm
 from django.http import HttpResponseRedirect
 from .forms import QuestionForm, AnswerForm, CommentForm
 
@@ -40,8 +40,9 @@ def SignIn(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request , username=username, password=password)
-        if user.is_anonymous:
-            user = None
+        # use AuthenticationForm()
+        # if user.is_anonymous:
+        #     user = None
         if user is not None:
             login(request, user)
             return redirect("/")

@@ -9,61 +9,71 @@ Ask Question
     <div class="card card-body m-5 p-5 " style="background-color: rgba(3, 29, 80, 0.178);">
         <form action="" method="POST" enctype="multipart/form-data">
             {% csrf_token%}
-            <div id="id_tags">
+            <div id="id_tags m-5">
                 <div class="form-group">
                     <center><label class="fw-bold fs-5 text-end" for="ques_input">Add Question</label></center>
-                    
+
                     <textarea id="ques_input" name="text" class="form-control m-3 p-3" rows="4"></textarea>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="tags" value="python" id="id_tags_0">
-                    <label class="form-check-label" for="id_tags_0">
-                        python
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="tags" value="django" id="id_tags_1">
-                    <label class="form-check-label" for="id_tags_1">
-                        django
-                    </label>
-                </div>
-                <input class="form-check-input" type="checkbox" name="tags" value="cpp" id="id_tags_2">
-                <label class="form-check-label" for="id_tags_2">
-                    cpp
-                </label>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="tags" value="C" id="id_tags_3">
-                    <label class="form-check-label" for="id_tags_3">
-                        C
-                    </label>
-                </div>
-                <input class="form-check-input" type="checkbox" name="tags" value="HTML" id="id_tags_4">
-                <label class="form-check-label" for="id_tags_4">
-                    HTML
-                </label>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="tags" value="CSS" id="id_tags_5">
-                    <label class="form-check-label" for="id_tags_5">
-                        CSS
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="tags" value="javascript" id="id_tags_6">
-                    <label class="form-check-label" for="id_tags_6">
-                        javascript
-                    </label>
+                <div class="d-flex justify-content-between mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="tags" value="python" id="id_tags_0">
+                        <label class="form-check-label" for="id_tags_0">
+                            python
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="tags" value="django" id="id_tags_1">
+                        <label class="form-check-label" for="id_tags_1">
+                            django
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="tags" value="cpp" id="id_tags_2">
+                        <label class="form-check-label" for="id_tags_2">
+                            cpp
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="tags" value="C" id="id_tags_3">
+                        <label class="form-check-label" for="id_tags_3">
+                            C
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="tags" value="HTML" id="id_tags_4">
+                        <label class="form-check-label" for="id_tags_4">
+                            HTML
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="tags" value="CSS" id="id_tags_5">
+                        <label class="form-check-label" for="id_tags_5">
+                            CSS
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="tags" value="javascript" id="id_tags_6">
+                        <label class="form-check-label" for="id_tags_6">
+                            javascript
+                        </label>
+                    </div>
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="tags" value="other" id="id_tags_7"
+                            checked>
+                        <label class="form-check-label" for="id_tags_7">
+                            Others
+                        </label>
+                    </div>
                 </div>
 
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="tags" value="other" id="id_tags_7" checked>
-                    <label class="form-check-label" for="id_tags_7">
-                        Others
-                    </label>
-                </div>
             </div>
 
-            <center><button type="submit" class="btn btn-primary m-1">Ask</button></center>
-            
+            <center><button type="submit" class="btn btn-primary m-1 mt-5 ">Ask</button></center>
+
 
         </form>
     </div>
