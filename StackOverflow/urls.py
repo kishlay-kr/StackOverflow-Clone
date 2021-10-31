@@ -34,6 +34,7 @@ urlpatterns = [
     path('<int:id>/upvote_ques' , views.upvote_ques, name = 'upvote_ques'),
     path('<int:id>/unupvote_ques' , views.unupvote_ques, name = 'unupvote_ques'),
     path('<int:id>/<int:q>/unupvote_ans', views.unupvote_ans, name = 'unupvote_ans'),
+    path('search',views.search, name="search")
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL , document_root = settings.MEDIA_ROOT)

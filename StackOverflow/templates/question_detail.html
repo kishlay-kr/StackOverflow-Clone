@@ -6,8 +6,8 @@ Homepage
 
 {% block content %}
 
-<div style="background-color: rgba(95, 158, 160, 0.089);" class="container d-flex flex-column align-items-center">
-  <div style="background-color: rgba(222, 184, 135, 0.185);" class="card bg-opacity-10 shadow-lg p-2 m-2 w-100">
+<div style="background-color: rgba(223, 223, 223, 0.089);" class="container d-flex flex-column align-items-center">
+  <div style="background-color: rgba(139, 139, 139, 0.185);" class="card bg-opacity-10 shadow-lg p-2 m-2 w-100">
     <div class="  card-body">
       <h5 class="card-title">{{ques.text|safe}}</h5>
       <div class="d-flex justify-content-between">
@@ -19,7 +19,7 @@ Homepage
           <a href="/{{ques.id}}/upvote_ques" class="btn btn-secondary">{{ques.upvotes_ques.all.count}} upvotes</a>
           {% endif %}
           <p class="text-muted">{{ques.views.all.count}} views</p>
-          <a style=" color:grey" href="#ans" class="text-muted">{{ques.question_ans.all.count}} answers</a>
+          <a style=" color:grey ;text-decoration: none;" href="#ans" class="text-muted">{{ques.question_ans.all.count}} answers</a>
 
 
         </div>
@@ -29,9 +29,12 @@ Homepage
         </div>
       </div>
       <p>
-        <a style="color:grey" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
+        <a style="color:grey ; text-decoration: none;" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
           aria-controls="collapseExample">
           {{ques.question_cmnt.all.count}} comments
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+          </svg>
         </a>
       </p>
       <div class="collapse card" id="collapseExample">

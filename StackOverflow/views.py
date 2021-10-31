@@ -41,8 +41,6 @@ def SignIn(request):
         password = request.POST['password']
         user = authenticate(request , username=username, password=password)
         # use AuthenticationForm()
-        # if user.is_anonymous:
-        #     user = None
         if user is not None:
             login(request, user)
             return redirect("/")
@@ -148,3 +146,15 @@ def unupvote_ques(request, id):
     ques.upvotes_ques.remove(request.user)
     id = str(id)
     return redirect("/"+id+"/question_detail")
+
+def search(request):
+    if request.user.is_anonymous:
+        user = None
+    else:
+        user = request.user
+
+    
+    query = request.GET['search']
+    questions = Question.objects.filter(tags__icontains=query)
+    return render(request, 'search.html', {'questions':questions, 'user':user} )
+    

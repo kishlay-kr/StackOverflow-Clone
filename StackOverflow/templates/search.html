@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Homepage
+{% endblock %}
+{% block head %}
+<style>
+  body{
+    background-color: rgba(255, 255, 255, 0.281);
+
+  }
+
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container w-75">
+  <center class="pt-3"><b style="font-size:150%;">Search Results</b></center>
+
+  {% for question in questions %}
+
+  <div class="card bg-opacity-10 shadow p-1 m-5 rounded">
+    <div class="card-body">
+      <a href="{{question.id}}/question_detail" style="color:black" >
+        <h5 class="card-title"><span>{{question.text|safe| capfirst }}</span> </h5>
+      </a>
+      <div class="d-flex justify-content-between" style="font-size:110%;">
+        <div>
+          <div class="py-3 text-muted">
+            Tags: 
+          {% for q in question.tags%}
+          <span class="text-muted px-3 py-1" style="border-radius:16px  ; background-color: rgba(56, 63, 66, 0.178);">{{q|title}}</span>
+          {% endfor %}
+          </div>
+          
+          <!-- <p class="text-muted">Tags: <span style="">{{question.tags|safeseq|join:" | "|title}}</span></p> -->
+          <p class="text-muted">{{question.question_cmnt.all.count}} comments  &nbsp;&nbsp; {{question.question_ans.all.count}} answers</p>
+        </div>
+        <div class="d-flex justify-content-end flex-column" >
+          <p class="text-muted fst- italic float-end">{{question.created_at}}</p>
+          <p class="text-muted float-top">by - {{question.author}}</p>
+        </div>
+      </div>
+
+
+
+
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+
+{% endblock %}
