@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Edit answer
+{% endblock %}
+{% block content %}
+<div class="container d-flex flex-column align-items-center">
+    <div class="card w-75 p-4 m-3" style="background-color: rgba(211, 146, 6, 0.527);">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="exampleFormControlTextarea1" class="p-1 fw-bold">Edit Answer </label>
+                <textarea name="text" class="form-control form-control-lg" id="exampleFormControlTextarea1" cols="10"
+                    rows="3">{{ans.text|striptags}}</textarea>
+            </div>
+            <button class="btn btn-primary m-1" type="submit" name="action">Save</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

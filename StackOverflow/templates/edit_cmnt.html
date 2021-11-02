@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Edit Comment
+{% endblock %}
+{% block content %}
+<div class="container">
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1" class="px-1 fw-bold">Edit comment</label>
+          <textarea name="text" class="form-control" id="exampleFormControlTextarea1" rows="3">{{cmnt.text}}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary  m-1">Save</button>
+      </form>
+</div>
+{% endblock %}

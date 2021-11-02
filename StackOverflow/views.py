@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate,login,logout
 from django.shortcuts import render,redirect, HttpResponseRedirect, get_object_or_404
-from .models import Question, Answer
+from .models import Comment, Question, Answer
 from django.contrib import messages
 from django.contrib.auth.models import auth, User
 from django.contrib.auth.forms import UserCreationForm , AuthenticationForm
@@ -93,7 +93,8 @@ def question_detail(request, id):
     else: 
         messages.error(request, 'Sign In to see the details of Question')
         return redirect("/SignIn")
-    user = User.objects.get(id = request.user.id)
+    # user = User.objects.get(id = request.user.id)
+    user = request.user
     return render(request, 'question_detail.html', {'ques': ques, 'form':form, 'form_ques':form_ques, 'form_ans':form_ans, 'user':user})
 
 def ask_question(request):
@@ -101,8 +102,10 @@ def ask_question(request):
         form = QuestionForm()
         if request.method == 'POST':
             form = QuestionForm(request.POST)
+            print(request.POST)
             if form.is_valid():
                 ques = form.save(commit=False)
+                print(ques.tags)
                 ques.author = User.objects.get(id = request.user.id)
                 ques.save()         
 
@@ -158,3 +161,56 @@ def search(request):
     questions = Question.objects.filter(tags__icontains=query)
     return render(request, 'search.html', {'questions':questions, 'user':user} )
     
+def edit_ques(request,id):
+    ques = Question.objects.get(id = id )   ##get_object_or_404
+    
+
+    if request.user == ques.author:
+        form = QuestionForm()
+        if request.method == 'POST':
+            form = QuestionForm(request.POST, instance=ques)
+            if form.is_valid():
+                # ques = form.save(commit=False)
+                # ques.save()      
+                form.save() 
+                return redirect("/"+str(id)+"/question_detail")  
+        else:
+            form = QuestionForm(instance=ques) ##*****************imp
+
+        return render(request, 'edit_ques.html', {'form' : form , 'ques':ques})## put the contents of elements in the template of edit_question
+    else:
+        messages.error(request, 'Only the author has permission to edit ')
+        return redirect("/"+str(id)+"/question_detail") ##show this error in question_detail template.
+
+def edit_ans(request,id,q):
+    ans = get_object_or_404(Answer, pk=id)
+    ques = get_object_or_404(Question, pk=q)
+
+    if request.user == ans.author_ans:
+        if request.method == 'POST' :
+            form = AnswerForm(request.POST , instance = ans)
+            form.save()
+            return redirect("/"+str(q)+"/question_detail")
+        else:
+            form = AnswerForm(instance = ans)
+        
+        return render(request, 'edit_ans.html', {'form':form, 'ans':ans, 'user':request.user})
+    else:
+        messages.error(request, 'Edit permissions denied')
+        return redirect("/"+str(q)+"/question_detail")
+
+
+def edit_cmnt(request,id,c):
+    # ques = get_object_or_404(Question, pk=id)
+    cmnt = get_object_or_404(Comment, pk=c)
+    if request.user == cmnt.author_cmnt:
+        if request.method == 'POST' :
+            form = CommentForm(request.POST, instance = cmnt)
+            form.save()
+            return redirect('/'+str(id)+'/question_detail')
+        else:
+            form = CommentForm(instance = cmnt)
+        return render(request, 'edit_cmnt.html', {'form':form, 'cmnt':cmnt})
+    else:
+        messages.error('Not allowed to edit')
+        return redirect('/'+str(id)+'/question_detail')

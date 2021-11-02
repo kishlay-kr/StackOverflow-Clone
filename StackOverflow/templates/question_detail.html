@@ -7,19 +7,32 @@ Homepage
 {% block content %}
 
 <div style="background-color: rgba(223, 223, 223, 0.089);" class="container d-flex flex-column align-items-center">
-  <div style="background-color: rgba(139, 139, 139, 0.185);" class="card bg-opacity-10 shadow-lg p-2 m-2 w-100">
-    <div class="  card-body">
+  {% for message in messages %}
+  <p class="text-center p-3 fw-bold fs-5" style="color: rgba(220, 20, 20, 0.925);">{{message}}</p>
+  {% endfor %}
+  <div style="background-color: rgba(139, 139, 139, 0.185);" class="card bg-opacity-10 shadow-lg p-2 m-4 w-100">
+
+    <div class="  card-body ">
+
       <h5 class="card-title">{{ques.text|safe}}</h5>
       <div class="d-flex justify-content-between">
         <div>
-          <p class="text-muted">Tags: {{ques.tags|safeseq|join:" | "|title}}</p>
+          <div class="py-3 text-muted">
+            Tags:
+            {% for q in ques.tags%}
+            <span class="text-muted px-3 py-1"
+              style="border-radius:16px  ; background-color: rgba(56, 63, 66, 0.178);">{{q|title}}</span>
+            {% endfor %}
+          </div>
           {% if user in ques.upvotes_ques.all %}
           <a href="/{{ques.id}}/unupvote_ques" class="btn btn-primary">{{ques.upvotes_ques.all.count}} upvotes</a>
           {% else %}
           <a href="/{{ques.id}}/upvote_ques" class="btn btn-secondary">{{ques.upvotes_ques.all.count}} upvotes</a>
           {% endif %}
           <p class="text-muted">{{ques.views.all.count}} views</p>
-          <a style=" color:grey ;text-decoration: none;" href="#ans" class="text-muted">{{ques.question_ans.all.count}} answers</a>
+          <a style=" color:grey ;text-decoration: none;" href="#ans" class="text-muted">{{ques.question_ans.all.count}}
+            answers</a>
+
 
 
         </div>
@@ -29,21 +42,25 @@ Homepage
         </div>
       </div>
       <p>
-        <a style="color:grey ; text-decoration: none;" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false"
-          aria-controls="collapseExample">
+        <a style="color:grey ; text-decoration: none;" data-toggle="collapse" href="#collapseExample" role="button"
+          aria-expanded="false" aria-controls="collapseExample">
           {{ques.question_cmnt.all.count}} comments
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z"/>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down"
+            viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+              d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z" />
           </svg>
         </a>
       </p>
-      <div class="collapse card" id="collapseExample">
+      <div class="collapse card ms-5" id="collapseExample">
         {% for cmnt in ques.question_cmnt.all %}
 
         <div class="border-bottom px-2">
           <b>{{cmnt.author_cmnt}} </b>&nbsp;&nbsp;<span
             class="text-muted fs-6 fw-lighter">{{cmnt.time}}</span><br>&nbsp;
           {{cmnt.text|safe}}
+          <br>
+          <a href="/{{ques.id}}/{{cmnt.id}}/edit_cmnt" class="link-secondary ms-2">Edit</a>
         </div>
 
         {% endfor %}
@@ -63,19 +80,25 @@ Homepage
 
 
       </div>
+      {% if user == ques.author %}
+      <a href="/{{ques.id}}/edit_ques" class="link-secondary">Edit</a>
+      {% endif %}
     </div>
   </div>
   <!---->
   <p class="fw-bold fs-5">Answers</p>
   {% for ans in ques.question_ans.all%}
 
-  <div class="card bg-opacity-10 shadow-lg p-2 m-2 w-75">
+  <div class="card bg-opacity-10 shadow-lg p-2 m-3 w-75">
     <div class="card-body ">
       <p>
-      <h5 class="card-title"><span>{{forloop.counter}}</span>.<span class="fs-5">{{ans.text|safe}}</span>
+      <h5 class="card-title"><span class="fs-5">{{ans.text|safe}}</span>
       </h5>
       </p>
+
       <div class="">
+
+        <br>
         {% if user in ans.upvotes_ans.all %}
         <a href="/{{ans.id}}/{{ques.id}}/unupvote_ans" class="btn btn-primary mb-1">{{ans.upvotes_ans.all.count}}
           upvotes</a>
@@ -88,19 +111,29 @@ Homepage
         </div>
         <!---->
         <p>
-          <a style="color:grey" data-toggle="collapse" href="#collapseExample{{ans.id}}" role="button"
-            aria-expanded="false" aria-controls="collapseExample{{ans.id}}">
+          <a style="color:grey ; text-decoration: none;" data-toggle="collapse" href="#collapseExample{{ans.id}}"
+            role="button" aria-expanded="false" aria-controls="collapseExample{{ans.id}}">
             {{ans.answer.all.count}} comments
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-down"
+              viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M8 1a.5.5 0 0 1 .5.5v11.793l3.146-3.147a.5.5 0 0 1 .708.708l-4 4a.5.5 0 0 1-.708 0l-4-4a.5.5 0 0 1 .708-.708L7.5 13.293V1.5A.5.5 0 0 1 8 1z" />
+            </svg>
           </a>
         </p>
-        <div class="collapse card" id="collapseExample{{ans.id}}">
+        <div class="collapse card ms-5" id="collapseExample{{ans.id}}">
           {% for cmnt in ans.answer.all %}
 
           <div class="border-bottom px-2">
             <b>{{cmnt.author_cmnt}} </b>&nbsp;&nbsp;<span
               class="text-muted fs-6 fw-lighter">{{cmnt.time}}</span><br>&nbsp;
             {{cmnt.text|safe}}
+            <br>
+            {% if user == cmnt.author_cmnt%}
+            <a href="/{{ques.id}}/{{cmnt.id}}/edit_cmnt" class="link-secondary ms-2">Edit</a>
+            {% endif %}
           </div>
+          
 
           {% endfor %}
 
@@ -119,13 +152,16 @@ Homepage
 
 
         </div>
+        {% if user == ans.author_ans%}
+        <a href="/{{ans.id}}/{{ques.id}}/edit_ans" class="my-5 link-secondary">Edit answer</a>
+        {% endif %}
         <!---->
 
       </div>
     </div>
   </div>
   {% endfor %}
-  <div class="card w-75 p-4" style="background-color: rgba(211, 146, 6, 0.527);">
+  <div class="card w-75 p-4 m-3" style="background-color: rgba(211, 146, 6, 0.527);">
     <form action="" method="POST" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="form-group">

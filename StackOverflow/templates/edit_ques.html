@@ -11,9 +11,9 @@ Ask Question
             {% csrf_token%}
             <div id="id_tags m-5">
                 <div class="form-group">
-                    <center><label class="fw-bold fs-5 text-end" for="ques_input">Add Question</label></center>
+                    <center><label class="fw-bold fs-5 text-end" for="ques_input">Edit Question</label></center>
 
-                    <textarea id="ques_input" name="text" class="form-control m-3 p-3" rows="4"></textarea>
+                    <textarea id="ques_input" name="text" class="form-control m-3 p-3" rows="4">{{ques.text|striptags}}</textarea>
                 </div>
                 <div class="d-flex justify-content-between mb-3">
                     <div class="form-check">
@@ -72,7 +72,7 @@ Ask Question
 
             </div>
 
-            <center><button type="submit" class="btn btn-primary m-1 mt-5 ">Ask</button></center>
+            <center><button type="submit" class="btn btn-primary m-1 mt-5 ">Save</button></center>
 
 
         </form>
@@ -82,43 +82,3 @@ Ask Question
 
 {% endblock %}
 
-
-<!-- <tr>
-    <th><label>Tags:</label></th>
-    <td>
-        <ul id="id_tags">
-            <li><label for="id_tags_0"><input type="checkbox" name="tags" value="python" id="id_tags_0">
-                    python</label>
-
-            </li>
-            <li><label for="id_tags_1"><input type="checkbox" name="tags" value="django" id="id_tags_1">
-                    django</label>
-
-            </li>
-            <li><label for="id_tags_2"><input type="checkbox" name="tags" value="cpp" id="id_tags_2">
-                    cpp</label>
-
-            </li>
-            <li><label for="id_tags_3"><input type="checkbox" name="tags" value="C" id="id_tags_3">
-                    C</label>
-
-            </li>
-            <li><label for="id_tags_4"><input type="checkbox" name="tags" value="HTML" id="id_tags_4">
-                    HTML</label>
-
-            </li>
-            <li><label for="id_tags_5"><input type="checkbox" name="tags" value="CSS" id="id_tags_5">
-                    CSS</label>
-
-            </li>
-            <li><label for="id_tags_6"><input type="checkbox" name="tags" value="javascript" id="id_tags_6">
-                    javascript</label>
-
-            </li>
-            <li><label for="id_tags_7"><input type="checkbox" name="tags" value="other" id="id_tags_7" checked>
-                    other</label>
-
-            </li>
-        </ul>
-    </td>
-</tr> -->
