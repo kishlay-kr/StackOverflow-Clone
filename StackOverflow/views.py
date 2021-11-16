@@ -31,9 +31,11 @@ def SignUp(request):
             user = authenticate(username = username , password = password)
             login(request,user)
             return redirect("/")
-       
+        else:
+            messages.info(request, 'try another username or enter a valid password')
+            return redirect("/SignUp")       
 
-    return render(request, "SignUp.html", {'form': form})
+    return render(request, "SignUp.html", {'form': form, 'user':None})
 
 def SignIn(request):
     if request.method == 'POST':
@@ -100,6 +102,7 @@ def question_detail(request, id):
 def ask_question(request):
     if request.user.is_authenticated:
         form = QuestionForm()
+        tags = ['python', 'django', 'cpp','C','HTML','CSS', 'javascript']
         if request.method == 'POST':
             form = QuestionForm(request.POST)
             print(request.POST)
@@ -109,7 +112,7 @@ def ask_question(request):
                 ques.author = User.objects.get(id = request.user.id)
                 ques.save()         
 
-        return render(request, 'ask_question.html', {'form' : form})
+        return render(request, 'ask_question.html', {'form' : form , 'tags': tags})
     else:
         messages.error(request, 'Sign In to ask a Question ')
         return redirect("/SignIn")
@@ -163,7 +166,8 @@ def search(request):
     
 def edit_ques(request,id):
     ques = Question.objects.get(id = id )   ##get_object_or_404
-    
+    tags = ['python', 'django', 'cpp','C','HTML','CSS', 'javascript','other']
+    checked = ques.tags
 
     if request.user == ques.author:
         form = QuestionForm()
@@ -177,7 +181,7 @@ def edit_ques(request,id):
         else:
             form = QuestionForm(instance=ques) ##*****************imp
 
-        return render(request, 'edit_ques.html', {'form' : form , 'ques':ques})## put the contents of elements in the template of edit_question
+        return render(request, 'edit_ques.html', {'form' : form , 'ques':ques, 'tags':tags, 'checked':checked})## put the contents of elements in the template of edit_question
     else:
         messages.error(request, 'Only the author has permission to edit ')
         return redirect("/"+str(id)+"/question_detail") ##show this error in question_detail template.

@@ -10,7 +10,7 @@ Homepage
   {% for message in messages %}
   <p class="text-center p-3 fw-bold fs-5" style="color: rgba(220, 20, 20, 0.925);">{{message}}</p>
   {% endfor %}
-  <div style="background-color: rgba(139, 139, 139, 0.185);" class="card bg-opacity-10 shadow-lg p-2 m-4 w-100">
+  <div style="background-color: rgba(59, 70, 82, 0.164);" class="card bg-opacity-10 shadow-lg p-2 m-4 w-75">
 
     <div class="  card-body ">
 
@@ -60,7 +60,9 @@ Homepage
             class="text-muted fs-6 fw-lighter">{{cmnt.time}}</span><br>&nbsp;
           {{cmnt.text|safe}}
           <br>
+          {% if user == cmnt.author_cmnt%}
           <a href="/{{ques.id}}/{{cmnt.id}}/edit_cmnt" class="link-secondary ms-2">Edit</a>
+          {% endif %}
         </div>
 
         {% endfor %}

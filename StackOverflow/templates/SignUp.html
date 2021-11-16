@@ -1,21 +1,22 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block head %}
-   
+
 <style>
-.div-2 {
-    padding: 5%;
-    background-color: #E1E6E7;
-    height: 100%;
-}
-.div-1 {
-    margin-inline: auto;
-    width: 40vw;
-    background-color: #E1E1E1;
-    padding: 2%;
-    border-radius: 2%;
-    box-shadow: 0px 5px 20px 2px #888888;
-}
+    .div-2 {
+        padding: 5%;
+        background-color: #E1E6E7;
+        height: 100%;
+    }
+
+    .div-1 {
+        margin-inline: auto;
+        width: 40vw;
+        background-color: #E1E1E1;
+        padding: 2%;
+        border-radius: 2%;
+        box-shadow: 0px 5px 20px 2px #888888;
+    }
 </style>
 
 {% endblock %}
@@ -24,22 +25,45 @@
     {{form.as_p}}
     <input type="submit" value='Save'/>
 </form> -->
+<center>
+    <div class="alert-danger" role="alert">
+        {% for message in messages %}
+        {{message|title}}
+        {% endfor %}
+    </div>
+</center>
+
 <div class="div-2">
     <div class="div-1">
-        <center><h3>User Sign Up </h3></center>
-        &nbsp;
-    <form action="" method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        <p><label for="id_username">Username:</label> <input type="text" name="username" maxlength="150" autocapitalize="none" autocomplete="username" autofocus required id="id_username"> <span class="helptext">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</span></p>
-    <p><label for="id_password1">Password:</label> <input type="password" name="password1" autocomplete="new-password" required id="id_password1"> <span class="helptext"><ul><li>Your password can’t be too similar to your other personal information.</li><li>Your password must contain at least 8 characters.</li><li>Your password can’t be a commonly used password.</li><li>Your password can’t be entirely numeric.</li></ul></span></p>
-    <p><label for="id_password2">Password confirmation:</label> <input type="password" name="password2" autocomplete="new-password" required id="id_password2"> <span class="helptext">Enter the same password as before, for verification.</span></p>
         <center>
-            <input style="background-color:green; border-radius:0.2rem; color:whitesmoke" type="submit" value='Sign Up'/>
+            <h3>User Sign Up </h3>
         </center>
-        
-    </form>
+        &nbsp;
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p><label for="id_username">Username:</label> <input type="text" name="username" maxlength="150"
+                    autocapitalize="none" autocomplete="username" autofocus required id="id_username"> <span
+                    class="helptext">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</span></p>
+            <p><label for="id_password1">Password:</label> <input type="password" name="password1"
+                    autocomplete="new-password" required id="id_password1"> <span class="helptext">
+                    <ul>
+                        <li>Your password can’t be too similar to your other personal information.</li>
+                        <li>Your password must contain at least 8 characters.</li>
+                        <li>Your password can’t be a commonly used password.</li>
+                        <li>Your password can’t be entirely numeric.</li>
+                    </ul>
+                </span></p>
+            <p><label for="id_password2">Password confirmation:</label> <input type="password" name="password2"
+                    autocomplete="new-password" required id="id_password2"><br> <span class="helptext">Enter the same
+                    password as before, for verification.</span></p>
+            <center>
+                <input style="background-color:green; border-radius:0.2rem; color:whitesmoke" type="submit"
+                    value='Sign Up' />
+            </center>
+
+        </form>
     </div>
 </div>
-    
+
 
 {% endblock %}
